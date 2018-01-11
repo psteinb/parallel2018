@@ -1,2 +1,0 @@
-
-CXXFLAGS += -I${BENCHMARK_ROOT}/include -L${BENCHMARK_ROOT}/lib -lbenchmark
