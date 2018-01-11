@@ -3,7 +3,7 @@ title: The Performance Addict's Toolbox
 author: Peter Steinbach
 origin: Scionics Computer Innovation GmbH
 email: steinbach@scionics.de
-date: Nov 10, 2017, MeetingC++ 2017, Berlin
+date: Jan 11, 2018, C++ UG Dresden
 ---
 
 
@@ -639,7 +639,7 @@ nctions with latencies: 5
 
 :notes[
 
-- introduce in llvm4
+- introduced in llvm4
 - flamegraph output available since llvm6
 - latency focussed 
 
@@ -1612,7 +1612,7 @@ $ my-browser report.html
 
 .col-8[
 
-![[G. Ofenbeck, "Applying the Roofline Model", ISPASS'14 proceedings, 2014](http://www.spiral.net/software/roofline.html)](img/roofline.png){ class="figure-img img-fluid" width="100%" }
+![[G. Ofenbeck, "Applying the Roofline Model", ISPASS'14 proceedings, 2014](http://www.spiral.net/software/roofline.html)](img/overview-mmm-illustrator.pdf.png){ class="figure-img img-fluid" width="100%" }
 
 .]
 
@@ -1621,40 +1621,13 @@ $ my-browser report.html
 - acknowledge boundaries of algorithm
 - differentiate "work" versus "traffic"
 - simplistic: bottleneck is either work or traffic
-- cache effects problematic
-
-.]
-
-.]
-
-.]
-
-
-## roofline in action
-
-.container-fluid[
-
-.row align-items-center[
-
-.col-8[
-
-![[G. Ofenbeck, "Applying the Roofline Model", ISPASS'14 proceedings, 2014](http://www.spiral.net/software/roofline.html)](img/overview-mmm-illustrator.pdf.png){ class="figure-img img-fluid" width="100%" }
-
-.]
-
-.col[
-
 - clear indication where optimisations go
-- can be used to give estimates on performance improvements (say on new hardware)
-- typically used for floating-point heavy applications
-- interesting mental model
 
 .]
 
 .]
 
 .]
-
 
 ## roofline for real
 
@@ -1682,6 +1655,54 @@ $ my-browser report.html
 
 .]
 
+## rooline tooling: [kerncraft](https://github.com/RRZE-HPC/kerncraft)
+
+```
+$ cat /tmp/add.c
+double a[N], b[N], c[N];
+
+for(int i=0; i<N; ++i)
+    a[i] = b[i] + c[i];
+
+```
+
+. . . 
+
+
+```    
+$ kerncraft  -p Roofline -m /tmp/IvyBridgeEP_E5-2660v2.yml \
+  /tmp/add.c -D N 1000
+                                     kerncraft                                    
+/tmp/add.c                                     -m /tmp/IvyBridgeEP_E5-2660v2.yml
+-D N 1000
+----------------------------------- Roofline -----------------------------------
+Cache or mem bound with 1 core(s)
+2.02 GFLOP/s due to L1 transfer bottleneck (bw with from copy benchmark)
+Arithmetic Intensity: 0.04 FLOP/B
+```
+
+
+.container-fluid[
+
+.row align-items-start[
+
+.col-6[
+
+- Loop Kernel Analysis and Performance Modeling Toolkit
+- static code analysis to infer data reuse and cache requirements
+
+.]
+
+.col-6[
+
+- can infer in-core and memory bottlenecks 
+- apply performance models to benchmarked data
+
+.]
+
+.]
+
+.]
 
 ## Bottom Line { data-background-image="img/pacman-games.jpg" style="margin-top: -200px; background: rgba(1,21,26, 0.8); border-radius: 20px;" }
 

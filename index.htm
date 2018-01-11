@@ -45,7 +45,7 @@
 	    <br><br>
 	  </p>
 	  
-	  <h3 class="date">Nov 10, 2017, MeetingC++ 2017, Berlin</h3>
+	  <h3 class="date">Jan 11, 2018, C++ UG Dresden</h3>
 	</section>
 		
 	<section><section id="real-life-performance-optimisation-is-never" class="titleslide slide level1"><h1>Real-life performance optimisation is never</h1></section><section id="as-simple-as-this" class="slide level2">
@@ -457,8 +457,8 @@ $ ./flamegraph.pl out.folded &gt; perf_samples.svg</code></pre>
 </section><section id="xray" class="slide level2">
 <h2><a href="https://llvm.org/docs/XRay.html">xray</a></h2>
 <pre><code>$ CXX=clang++ make
-$ XRAY_OPTIONS=&quot;patch_premain=true xray_mode=xray-basic verbosity=1&quot; 
 
+$ XRAY_OPTIONS=&quot;patch_premain=true xray_mode=xray-basic verbosity=1&quot; 
 $ ./vector_unroll_example
 ==31936==XRay: Log file in &#39;xray-log.vector_unroll_example.ju4PNk&#39;
 Compute time native loop is 0.159 micros.
@@ -472,7 +472,7 @@ nctions with latencies: 5
       2       1275 [ 0.000005,  0.000011,  0.000012,  ...]  0.013064  &lt;invalid&gt;:0:0: void my_axpy&lt;2u, vector&lt;float&gt;, vector&lt;float&gt;, vector&lt;float&gt; &gt;(vector&lt;float&gt;&amp;, vector&lt;float&gt; const&amp;, vector&lt;float&gt; const&amp;)</code></pre>
 <aside class="notes">
 <ul>
-<li>introduce in llvm4</li>
+<li>introduced in llvm4</li>
 <li>flamegraph output available since llvm6</li>
 <li>latency focussed</li>
 </ul>
@@ -1235,7 +1235,7 @@ $ my-browser report.html</code></pre>
 <div class="row align-items-center">
 <div class="col-8">
 <figure>
-<img src="img/roofline.png" alt="G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS&#39;14 proceedings, 2014" class="figure-img img-fluid" style="width:100.0%" /><figcaption><a href="http://www.spiral.net/software/roofline.html">G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS'14 proceedings, 2014</a></figcaption>
+<img src="img/overview-mmm-illustrator.pdf.png" alt="G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS&#39;14 proceedings, 2014" class="figure-img img-fluid" style="width:100.0%" /><figcaption><a href="http://www.spiral.net/software/roofline.html">G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS'14 proceedings, 2014</a></figcaption>
 </figure>
 </div>
 <div class="col">
@@ -1243,26 +1243,7 @@ $ my-browser report.html</code></pre>
 <li>acknowledge boundaries of algorithm</li>
 <li>differentiate &quot;work&quot; versus &quot;traffic&quot;</li>
 <li>simplistic: bottleneck is either work or traffic</li>
-<li>cache effects problematic</li>
-</ul>
-</div>
-</div>
-</div>
-</section><section id="roofline-in-action" class="slide level2">
-<h2>roofline in action</h2>
-<div class="container-fluid">
-<div class="row align-items-center">
-<div class="col-8">
-<figure>
-<img src="img/overview-mmm-illustrator.pdf.png" alt="G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS&#39;14 proceedings, 2014" class="figure-img img-fluid" style="width:100.0%" /><figcaption><a href="http://www.spiral.net/software/roofline.html">G. Ofenbeck, &quot;Applying the Roofline Model&quot;, ISPASS'14 proceedings, 2014</a></figcaption>
-</figure>
-</div>
-<div class="col">
-<ul>
 <li>clear indication where optimisations go</li>
-<li>can be used to give estimates on performance improvements (say on new hardware)</li>
-<li>typically used for floating-point heavy applications</li>
-<li>interesting mental model</li>
 </ul>
 </div>
 </div>
@@ -1283,6 +1264,41 @@ $ my-browser report.html</code></pre>
 <li>note the variances!</li>
 <li>published at ISC'17</li>
 </ul>
+</div>
+</div>
+</div>
+</section><section id="rooline-tooling-kerncraft" class="slide level2">
+<h2>rooline tooling <a href="https://github.com/RRZE-HPC/kerncraft">kerncraft</a></h2>
+<pre><code>$ cat /tmp/add.c
+double a[N], b[N], c[N];
+
+for(int i=0; i&lt;N; ++i)
+    a[i] = b[i] + c[i];
+</code></pre>
+<div class="fragment">
+<pre><code>$ kerncraft  -p Roofline -m /tmp/IvyBridgeEP_E5-2660v2.yml \
+  /tmp/add.c -D N 1000
+                                     kerncraft                                    
+/tmp/add.c                                     -m /tmp/IvyBridgeEP_E5-2660v2.yml
+-D N 1000
+----------------------------------- Roofline -----------------------------------
+Cache or mem bound with 1 core(s)
+2.02 GFLOP/s due to L1 transfer bottleneck (bw with from copy benchmark)
+Arithmetic Intensity: 0.04 FLOP/B</code></pre>
+<div class="container-fluid">
+<div class="row align-items-start">
+<div class="col-6">
+<ul>
+<li>Loop Kernel Analysis and Performance Modeling Toolkit</li>
+<li>static code analysis to infer data reuse and cache requirements</li>
+</ul>
+</div>
+<div class="col-6">
+<ul>
+<li>can infer in-core and memory bottlenecks</li>
+<li>apply performance models to benchmarked data</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
