@@ -1,0 +1,4 @@
+```
+def fun(arg):
+    return 42
+```

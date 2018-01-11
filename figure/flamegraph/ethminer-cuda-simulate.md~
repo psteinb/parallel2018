@@ -1,0 +1,5 @@
+# how to reproduce the ethminer flamegraph
+
+## obtain ethminer
+
+- go to [github.com/ethereum-mining/ethminer](https://github.com/ethereum-mining/ethminer)

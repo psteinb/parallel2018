@@ -1,0 +1,238 @@
+---
+title: "memory bandwidth on rocm"
+output: html_document
+---
+
+## Problem description
+
+[BabelStream](https://github.com/UoB-HPC/BabelStream) is a memory benchmark for GPUs using various programming APIs. 
+
+
+## Experiments 
+
+As illustrated on this [github issue](https://github.com/RadeonOpenCompute/ROCm/issues/102)
+
+### Results
+
+Let's look at float32 first:
+
+```{r load_data, echo=FALSE, fig.width = 10}
+library(dplyr, warn.conflicts=FALSE)
+library(readr)
+library(ggplot2)
+library(scales)
+
+rocm1_4 = read_csv("fiji_r9_nano_rocm1.4-ubuntu14.04.5-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.4-ubuntu14.04.5-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.4-ubuntu14.04.5-hc-gpustream.csv"      ,col_names=FALSE))
+
+rocm1_5 = read_csv("fiji_r9_nano_rocm1.5-ubuntu16.04.2-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-ubuntu16.04.2-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-ubuntu16.04.2-hc-gpustream.csv"      ,col_names=FALSE))
+
+rocm1_5_80 = read_csv("fiji_r9_nano_rocm1.5-80-ubuntu16.04.2-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-80-ubuntu16.04.2-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-80-ubuntu16.04.2-hc-gpustream.csv"      ,col_names=FALSE))
+
+rocm1_5_99 = read_csv("fiji_r9_nano_rocm1.5-99-ubuntu16.04.2-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-99-ubuntu16.04.2-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.5-99-ubuntu16.04.2-hc-gpustream.csv"      ,col_names=FALSE))
+
+rocm1_6_77 = read_csv("fiji_r9_nano_rocm1.6-77-ubuntu16.04.2-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.6-77-ubuntu16.04.2-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.6-77-ubuntu16.04.2-hc-gpustream.csv"      ,col_names=FALSE))
+
+rocm1_6_115 = read_csv("fiji_r9_nano_rocm1.6-115-ubuntu16.04.2-hip-gpustream.csv"      ,col_names=FALSE) %>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.6-115-ubuntu16.04.2-ocl-gpustream.csv"      ,col_names=FALSE))%>%
+bind_rows(read_csv("fiji_r9_nano_rocm1.6-115-ubuntu16.04.2-hc-gpustream.csv"      ,col_names=FALSE))
+
+
+add_colnames = function(df){
+    colnames(df) = c("alg","bw_mb_per_sec","maxv","meanv","minv","sizeof","array_size","total_volume_gb","api")
+    df$sizeof = as.factor(df$sizeof)
+    df$alg = as.factor(df$alg)
+    levels(df$sizeof) = c("float","double")
+    return(df)
+}
+
+add_colnames_for_new_schema = function(df){
+    colnames(df) = c("alg","bw_mb_per_sec","maxv","meanv","minv","sizeof","array_size","total_volume_gb","api","kernelrelease")
+    df$sizeof = as.factor(df$sizeof)
+    df$alg = as.factor(df$alg)
+    levels(df$sizeof) = c("float","double")
+    return(df)
+}
+
+rocm1_4 = add_colnames(rocm1_4)
+rocm1_4$rocm_version = "1.4"
+
+rocm1_5 = add_colnames(rocm1_5)
+rocm1_5$rocm_version = "1.5"
+
+rocm1_5_80 = add_colnames_for_new_schema(rocm1_5_80)
+rocm1_5_80$rocm_version = "1.5-80"
+
+rocm1_5_99 = add_colnames_for_new_schema(rocm1_5_99)
+rocm1_5_99$rocm_version = "1.5-99"
+
+rocm1_6_77 = add_colnames_for_new_schema(rocm1_6_77)
+rocm1_6_77$rocm_version = "1.6-77"
+
+rocm1_6_115 = add_colnames_for_new_schema(rocm1_6_115)
+rocm1_6_115$rocm_version = "1.6-115"
+
+
+global_df = rocm1_5 %>% bind_rows(rocm1_4) %>% bind_rows(rocm1_6_115) %>% bind_rows(rocm1_5_99) %>% mutate(bw_gb_per_sec = bw_mb_per_sec/1024.)
+
+add_df = global_df %>% filter(sizeof=="float", "Add" == alg) %>%
+group_by(array_size, api, rocm_version, bw_gb_per_sec) %>%
+summarize( mn = mean(bw_gb_per_sec), md = median(bw_gb_per_sec), sd = sd(bw_gb_per_sec))
+
+mul_df = global_df %>% filter(sizeof=="float", "Mul" == alg) %>%
+group_by(array_size, api, rocm_version, bw_gb_per_sec) %>%
+summarize( mn = mean(bw_gb_per_sec), md = median(bw_gb_per_sec), sd = sd(bw_gb_per_sec))
+
+triad_df = global_df %>% filter(sizeof=="float", "Triad" == alg) %>%
+group_by(array_size, api, rocm_version, bw_gb_per_sec) %>%
+summarize( mn = mean(bw_gb_per_sec), md = median(bw_gb_per_sec), sd = sd(bw_gb_per_sec))
+
+dot_df = global_df %>% filter(sizeof=="float", "Dot" == alg) %>%
+group_by(array_size, api, rocm_version, bw_gb_per_sec) %>%
+summarize( mn = mean(bw_gb_per_sec), md = median(bw_gb_per_sec), sd = sd(bw_gb_per_sec))
+```
+
+```{r add_plot, echo=FALSE, fig.width = 12}
+
+add_plot = ggplot(add_df,aes(array_size,mn,color=api)) + theme_bw()
+add_plot = add_plot + geom_line() + facet_wrap(~ rocm_version)
+add_plot = add_plot + geom_point(size=3)
+add_plot = add_plot + geom_errorbar(aes(ymin = mn-sd, ymax = mn+sd), width = 0.1)
+add_plot = add_plot + ggtitle("AMD Fiji R9 Nano, BabelStream Add (c[:] = a[:] + b[:])") 
+add_plot = add_plot + xlab("array size (float32)") + ylab("add bandwidth / [GB/s]")
+add_plot = add_plot + ylim(0,500)
+add_plot = add_plot + scale_x_continuous(trans=log2_trans(), breaks = trans_breaks("log2", function(x) 2^x),  labels = trans_format("log2", math_format(2^.x)))
+
+add_plot
+```
+
+```{r triad_plot, echo=FALSE, fig.width = 12}
+
+triad_plot = ggplot(triad_df,aes(array_size,mn,color=api)) + theme_bw()
+triad_plot = triad_plot + geom_line() + facet_wrap(~ rocm_version)
+triad_plot = triad_plot + geom_point(size=3)
+triad_plot = triad_plot + geom_errorbar(aes(ymin = mn-sd, ymax = mn+sd), width = 0.1)
+triad_plot = triad_plot + ggtitle("AMD Fiji R9 Nano, BabelStream Triad (c[:] = a[:] + d*b[:])") 
+triad_plot = triad_plot + xlab("array size (float32)") + ylab("triad bandwidth / [GB/s]")
+triad_plot = triad_plot + ylim(0,500)
+triad_plot = triad_plot + scale_x_continuous(trans=log2_trans(), breaks = trans_breaks("log2", function(x) 2^x),  labels = trans_format("log2", math_format(2^.x)))
+
+triad_plot
+```
+
+
+the situation looks quite different for much simpler kernels.
+
+```{r mul_plot, echo=FALSE, fig.width = 10}
+
+
+mul_plot = ggplot(mul_df,aes(array_size,mn,color=api)) + theme_bw()
+mul_plot = mul_plot + geom_line() + facet_wrap(~ rocm_version)
+mul_plot = mul_plot + geom_point(size=3)
+mul_plot = mul_plot + geom_errorbar(aes(ymin = mn-sd, ymax = mn+sd), width = 0.1)
+mul_plot = mul_plot + ggtitle("AMD Fiji R9 Nano, BabelStream Mul (c[:] = d*b[:])") 
+mul_plot = mul_plot + xlab("array size (float32)") + ylab("mul bandwidth / [GB/s]")
+mul_plot = mul_plot + ylim(0,500)
+mul_plot = mul_plot + scale_x_continuous(trans=log2_trans(), breaks = trans_breaks("log2", function(x) 2^x),  labels = trans_format("log2", math_format(2^.x)))
+
+mul_plot
+
+```
+
+Especially in rocm 1.5 we can see performance degradation clearly.
+
+## How to reproduce
+
+The below is a message to Greg Stoner (AMD) on May 4th, 2017:
+
+Hey Greg,
+
+thanks for looking into [1].
+
+The 3 kernels I was using are from:
+- [2], to compile it clone the repo, checkout the rocm_hc_support branch and do:
+```
+$ make -f HC.make #assuming all essential folders from /opt/rocm are in PATH and LD_LIBRARY_PATH
+$ ./hc-stream --arraysize 150994944 --device 1 --float
+GPU-STREAM
+Version: 3.1
+Implementation: HC
+Running kernels 100 times
+Precision: float
+Array size: 604.0 MB (=0.6 GB)
+Total size: 1811.9 MB (=1.8 GB)
+Using HC device AMD HSA Agent gfx8032
+Validation failed on sum. Error 0.000366211
+Sum was 179.060256958008 but should be 179.060623168945
+Function    MBytes/sec  Min (sec)   Max         Average
+Copy        321696.193  0.00375     0.00384     0.00379
+Mul         323870.758  0.00373     0.00380     0.00376
+Add         290990.028  0.00623     0.00637     0.00630
+Triad       280530.997  0.00646     0.00665     0.00656
+Dot         298432.719  0.00405     0.00462     0.00417
+```
+
+- [3], to compile it clone the repo, checkout the master branch and do:
+```
+$ make -f HIP.make #assuming all essential folders from /opt/rocm are in PATH and LD_LIBRARY_PATH
+$ ./hip-stream --arraysize 150994944  --float
+GPU-STREAM
+Version: 3.1
+Implementation: HIP
+Running kernels 100 times
+Precision: float
+Array size: 604.0 MB (=0.6 GB)
+Total size: 1811.9 MB (=1.8 GB)
+Using HIP device Fiji [Radeon R9 FURY / NANO Series]
+Driver: 4
+Validation failed on sum. Error 0.000961304
+Sum was 179.059661865234 but should be 179.060623168945
+Function    MBytes/sec  Min (sec)   Max         Average
+Copy        329340.999  0.00367     0.00464     0.00371
+Mul         328247.113  0.00368     0.00375     0.00372
+Add         430940.912  0.00420     0.00439     0.00423
+Triad       379790.712  0.00477     0.00513     0.00482
+Dot         402374.607  0.00300     0.00318     0.00307
+```
+
+- [4], to compile it clone the repo, checkout the rocm_opencl_support branch and do:
+```
+$ make -f OpenCL.make COMPILER=HCC #assuming all essential folders from /opt/rocm are in PATH and LD_LIBRARY_PATH
+$ ./ocl-stream --arraysize 150994944  --float
+GPU-STREAM
+Version: 3.1
+Implementation: OpenCL
+Running kernels 100 times
+Precision: float
+Array size: 604.0 MB (=0.6 GB)
+Total size: 1811.9 MB (=1.8 GB)
+Using OpenCL device gfx803
+Driver: 1.1 (HSA,LC)
+Reduction kernel config: 256 groups of size 256
+Validation failed on sum. Error 0.000701904
+Sum was 179.059921264648 but should be 179.060623168945
+Function    MBytes/sec  Min (sec)   Max         Average
+Copy        420481.604  0.00287     0.00353     0.00293
+Mul         418720.465  0.00288     0.00351     0.00294
+Add         399438.063  0.00454     0.00583     0.00458
+Triad       372644.380  0.00486     0.00638     0.00493
+Dot         416171.402  0.00290     0.00304     0.00297
+```
+
+Best,
+Peter
+
+
+[1] https://github.com/RadeonOpenCompute/ROCm/issues/102#issuecomment-299157994
+[2] https://github.com/psteinb/GPU-STREAM/tree/rocm_hc_support
+[3] https://github.com/UoB-HPC/BabelStream
+[4] https://github.com/psteinb/GPU-STREAM/tree/rocm_opencl_support
