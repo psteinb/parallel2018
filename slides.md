@@ -1009,7 +1009,7 @@ numactl -m0 -C0-3 ./stream
 
 . . .
 
-> Chandler: How do you define "poeple who know a lot about performance"? Serious question. So I work with Google's optimisation team who is responsible for making our C++ code run fast. And I have never seen them manually unroll a loop. 
+> Chandler: How do you define "people who know a lot about performance"? Serious question. So I work with Google's optimisation team who is responsible for making our C++ code run fast. And I have never seen them manually unroll a loop. 
 
 
 ## chrono is your friend
