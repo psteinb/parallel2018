@@ -39,13 +39,13 @@
 		<section>
 	  <h1 class="title">The Performance Addict's Toolbox</h1>
 	  	  <p>
-	    <b>Peter Steinbach</b><br>
-	    <emph>(Scionics Computer Innovation GmbH)</emph><br>
-	    <a href="mailto:steinbach@scionics.de">steinbach@scionics.de</a>
+	    <b>Thomas Röhl</b><br>
+	    <emph>(HPC group of University Erlangen-Nuremburg)</emph><br>
+	    <a href="mailto:Thomas.Roehl@fau.de">Thomas.Roehl@fau.de</a>
 	    <br><br>
 	  </p>
 	  
-	  <h3 class="date">Jan 11, 2018, C++ UG Dresden</h3>
+	  <h3 class="date">Mar 8, 2018, parallel2018</h3>
 	</section>
 		
 	<section><section id="real-life-performance-optimisation-is-never" class="titleslide slide level1"><h1>Real-life performance optimisation is never</h1></section><section id="as-simple-as-this" class="slide level2">
@@ -86,43 +86,58 @@
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/events_header_m_quarter.jpg" class="figure-img img-fluid" style="width:50.0%" />
+<img src="img/RRZE_Aussen_2013.jpg" class="figure-img img-fluid" style="width:100.0%" />
+<figcaption><a href="https://www.rrze.fau.de">Regional Computing Center Erlangen</a>, CC, <a href="https://de.wikipedia.org/wiki/Regionales_Rechenzentrum_Erlangen#/media/File:RRZE_Geb%C3%A4ude_2013.jpg">SRC</a></figcaption>
 </figure>
 </div>
 <div class="col">
-<p><strong><a href="www.scionics.de">Scionics Computer Innovation GmbH</a></strong></p>
+<p><strong><a href="https://hpc.fau.de">HPC group at Regional Computing Center Erlangen</a></strong></p>
 <ul>
-<li>software and consulting company</li>
-<li>founded in 2001 in Dresden, Germany</li>
-<li>expertise in data analysis, bioinformatics, image analysis, HPC, ...</li>
+<li>support users on our HPC infrastructure</li>
+<li>software and research projects related to node-level performance engineering</li>
+
+<li>developer of the <a href="https://moodle.rrze.uni-erlangen.de/pluginfile.php/11357/mod_resource/content/1/ECM.pdf">Execution-Cache-Model</a> (refinement of the Roofline model)</li>
+<li>tool development</li>
+</ul>
+<p><strong><a href="https://www.rrze.fau.de/person/thomas-roehl/">Thomas Röhl</a></strong></p>
+<ul>
+<li>topics: performance engineering,  node-level optimization</li>
+<li>main developer of the <a href="https://github.com/RRZE-HPC/likwid/wiki">LIKWID</a>, a tool suite for performance oriented programmers</li>
 </ul>
 </div>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>2h by car south of Berlin<br />
+<li>2h by car north of Munich<br />
 </li>
-<li>NEXT: biggest client = CBG</li>
+<li>NEXT: University</li>
 </ul>
 </aside>
-</section><section id="our-client" class="slide level2">
-<h2>Our Client</h2>
+</section><section id="the-university" class="slide level2">
+<h2>The university</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/800px-MPI-CBG_building_outside_4pl.jpg" alt="MPI for Molecular Cell Biology and Genetics" class="figure-img img-fluid" style="width:100.0%" /><figcaption>MPI for Molecular Cell Biology and Genetics</figcaption>
+<img src="img/Schloss-Erlangen02.JPG" alt="Main building of University Erlangen-Nuremburg" class="figure-img img-fluid" style="width:100.0%" /><figcaption>Main building of University Erlangen-Nuremburg</figcaption>
+
 </figure>
-<p><a href="www.mpi-cbg.de">mpi-cbg.de</a></p>
+<p><a href="www.fau.de">www.fau.de</a></p>
+<p><small>Foto by <a href=http://commons.wikimedia.org/wiki/User:Selby>Selby</a>, CC, <a href="http://www.wikiwand.com/de/Friedrich-Alexander-Universit%C3%A4t_Erlangen-N%C3%BCrnberg">SRC</a></small></p>
 </div>
 <div class="col">
+<p><strong><a href="https://www.fau.de">Friedrich-Alexander University</br>Erlangen-Nuremburg</a></strong></p>
 <ul>
-<li>500+ staff</li>
-<li>my role: <em>Scientific Software Engineer</em></li>
-<li>support users on our HPC infrastructure</li>
-<li>software projects related to performance (think multi-threaded, GPUs, ..)</li>
+<li>&asymp; 40000 students</li>
+<li>&asymp; 250 majors</li>
+<li>Top3 @ Bavaria, Top 10 @ Germany</li>
 </ul>
+<figure>
+<img src="img/erlangen_map.gif" alt="Location of Erlangen" class="figure-img img-fluid" style="width:30.0%" />
+<!--<figcaption>Location of Erlangen</figcaption>-->
+
+</figure>
 </div>
 </div>
 </div>
@@ -140,7 +155,7 @@
 <figure>
 <img src="img/opensource-550x475.png" class="figure-img img-fluid" style="width:40.0%" />
 </figure>
-<p><strong><a href="https://github.com/psteinb/meetingcpp2017">github.com/psteinb/meetingcpp2017</a></strong></p>
+<p><strong><a href="https://github.com/psteinb/parallel2018">github.com/psteinb/parallel2018</a></strong></p>
 </div>
 </div>
 </div>
@@ -246,7 +261,7 @@ $ dd if=/dev/zero of=/dev/shm/2gb.zeros bs=1G count=2
 2147483648 bytes (2.1 GB) copied, 1.14782 s, 1.9 GB/s</code></pre>
 <p> </p>
 <p><strong>What can your hardware typically do?</strong></p>
-<p>dd, <a href="http://www.nersc.gov/users/computational-systems/cori/nersc-8-procurement/trinity-nersc-8-rfp/nersc-8-trinity-benchmarks/ior/">ior</a>, memhog, <a href="https://www.cs.virginia.edu/stream/">stream</a>, ...</p>
+<p>dd, <a href="http://www.nersc.gov/users/computational-systems/cori/nersc-8-procurement/trinity-nersc-8-rfp/nersc-8-trinity-benchmarks/ior/">ior</a>, memhog, <a href="https://www.cs.virginia.edu/stream/">stream</a>, <a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Bench">LIKWID</a>, ...</p>
 <aside class="notes">
 <ul>
 <li>to search for the bottleneck, know your performance without it</li>
@@ -361,7 +376,7 @@ $ ./flamegraph.pl out.folded &gt; perf_samples.svg</code></pre>
 </div>
 <div class="col">
 <ul>
-<li>(y axis) number of samples in that stacktrace level</li>
+<li>(y axis) number of sampl es in that stacktrace level</li>
 </ul>
 </div>
 </div>
@@ -401,7 +416,7 @@ $ ./flamegraph.pl out.folded &gt; perf_samples.svg</code></pre>
 </ul>
 </aside>
 </section><section id="valgrind-kcachegrind" class="slide level2">
-<h2><a href="valgrind.org">valgrind</a> + kcachegrind</h2>
+<h2><a href="http://www.valgrind.org/">valgrind</a> + kcachegrind</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
@@ -561,7 +576,7 @@ List of pre-defined events (to be used in -e):
 <ul>
 <li>perf event list depends on kernel version</li>
 <li>hardware counters are not portable (specification change by vendors)</li>
-<li>alternative: <a href="https://github.com/andikleen/pmu-tools">ocperf</a></li>
+<li>alternative: <a href="https://github.com/andikleen/pmu-tools">ocperf</a> </li>
 </ul>
 </div>
 </div>
@@ -586,16 +601,16 @@ List of pre-defined events (to be used in -e):
 <div class="row align-items-start">
 <div class="col">
 <ul>
-<li><a href="https://github.com/RRZE-HPC/likwid">github.com/RRZE-HPC/likwid</a></li>
-<li>open source Performance monitoring and benchmarking suite</li>
-<li>Linux only</li>
+<li><a href="https://github.com/RRZE-HPC/likwid/wiki">github.com/RRZE-HPC/likwid</a></li>
+<li>performance monitoring and benchmarking suite</li>
+<li>Linux only, GPL</li>
 </ul>
 </div>
 <div class="col">
 <ul>
-<li>profiling through hardware counters (consistent meta markers for portability)</li>
+<li>profiling through hardware counters<br>(consistent eventset names for portability)</li>
 <li>exploration through monitoring</li>
-<li>marker API for C, C++, java and python</li>
+<li>instrumentation API for C, C++, java and python</li>
 </ul>
 </div>
 </div>
@@ -680,7 +695,7 @@ numactl -m0 -C0-3 ./my_app
 +---------------------------------------|--------------|</code></pre>
 </div>
 <div class="col-6">
-<p>Stream Benchmark as Reference</p>
+<p><a href="https://www.cs.virginia.edu/stream/">stream</a> benchmark as reference</p>
 <pre><code># export OMP_NUM_THREADS=1
 # path/to/likwid-perfctr -f -c 0 -g FALSE_SHARE \
 numactl -m0 -C0 ./stream
