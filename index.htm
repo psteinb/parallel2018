@@ -65,7 +65,7 @@
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/dark_Odysseus_Journey_zoom.png" class="figure-img img-fluid" style="width:100.0%" />
+<img src="img/dark_Odysseus_Journey_zoom.png" class="figure-img img-fluid" style="width:100.0%" /><figcaption><small>by Giulia Zoccarato, DensityDesign Research Lab, <a href="https://upload.wikimedia.org/wikipedia/commons/2/20/Odysseus%27_Journey.svg">CC-SA 4.0</a></small></figcaption>
 </figure>
 </div>
 </div>
@@ -87,7 +87,7 @@
 <div class="col">
 <figure>
 <img src="img/RRZE_Aussen_2013.jpg" class="figure-img img-fluid" style="width:100.0%" />
-<figcaption><a href="https://www.rrze.fau.de">Regional Computing Center Erlangen</a>, by Wolfgang Wiese, <a href="https://de.wikipedia.org/wiki/Regionales_Rechenzentrum_Erlangen#/media/File:RRZE_Geb%C3%A4ude_2013.jpg">CC-BY 3.0</a></figcaption>
+<figcaption><a href="https://www.rrze.fau.de">Regional Computing Center Erlangen</a>,</br>by Wolfgang Wiese, <a href="https://de.wikipedia.org/wiki/Regionales_Rechenzentrum_Erlangen#/media/File:RRZE_Geb%C3%A4ude_2013.jpg">CC-BY 3.0</a></figcaption>
 </figure>
 </div>
 <div class="col">
@@ -101,7 +101,7 @@
 </ul>
 <p><strong><a href="https://www.rrze.fau.de/person/thomas-roehl/">Thomas Röhl</a></strong></p>
 <ul>
-<li>topics: performance engineering,  node-level optimization</li>
+<li>topics: performance engineering,  node-level optimisation</li>
 <li>main developer of the <a href="https://github.com/RRZE-HPC/likwid/wiki">LIKWID</a>, a tool suite for performance oriented programmers</li>
 </ul>
 </div>
@@ -715,7 +715,80 @@ $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
 </div>
 <p><center><strong>Warning</strong>: some events provide only qualitative but not quantitative results</center></p>
 </div>
-</section><section id="bottom-line-1" class="slide level2">
+</section>
+
+<section id="instrumentation-likwid" class="slide level2">
+<h2>Use LIKWID's MarkerAPI</h2>
+<p><strong>Interested in just a code region?</strong></p>
+<div class="container-fluid">
+<div class="row align-items-start">
+<div class="col-6">
+<p>Instrumented version of <a href="https://www.cs.virginia.edu/stream/">stream</a>'s triad</p>
+<pre><code>#include &quot;omp.h&quot;
+#include &quot;likwid.h&quot;
+
+#define ITER 100
+#define SIZE 40000000
+int main(int argc, char* argv[])
+{
+    //allocate and initialize a, b, c and d
+#pragma omp parallel
+{
+    for (int k=0; k&lt;ITER; k++)
+    {
+        LIKWID_MARKER_START(&quot;triad&quot;);
+#pragma simd
+#pragma omp for
+        for (int j=0; j&lt;SIZE; j++)
+        {
+            a[j] = b[j] +  c[j] * d[j];
+        }   
+        LIKWID_MARKER_STOP(&quot;triad&quot;);
+    }
+}
+    // check result in a and free a, b, c and d
+    return 0;
+}
+</code></pre>
+</div>
+<div class="col-6">
+<p></p>
+<ul>
+<li>Include MarkerAPI around code regions</li>
+<li>Link with LIKWID lib and -DLIKWID_PERFMON</li>
+<li>Specify events and -m on perfctr cmdline</li>
+<li>Results are grouped by region string</li>
+</ul>
+<div class="fragment">
+<pre><code>$ likwid-perfctr -C &lt;cpus&gt; -g &lt;eventset&gt; -m ./a.out
+[...]
+Region triad, Group 1: L3
++-------------------+----------+
+|    Region Info    |  Core 0  |
++-------------------+----------+
+| RDTSC Runtime [s] | 0.846960 |
+|     call count    |      100 |
++-------------------+----------+
+[...raw counter values...]
++-------------------------------+------------+
+|             Metric            |   Core 0   |
++-------------------------------+------------+
+|      Runtime (RDTSC) [s]      |     0.8470 |
+|      Runtime unhalted [s]     |     0.8451 |
+|  L3 load bandwidth [MBytes/s] | 15121.3486 |
+| L3 evict bandwidth [MBytes/s] |  3298.9553 |
+|    L3 bandwidth [MBytes/s]    | 18420.3040 |
++-------------------------------+------------+
+[...more results...]
+</code></pre>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="bottom-line-1" class="slide level2">
 <h2>Bottom Line</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -1117,7 +1190,7 @@ BENCHMARK_MAIN();</code></pre>
 <li><p>multiple arguments are also supported</p>
 <pre><code>BENCHMARK_TEMPLATE(BM_integer_index,int)
 //42 is the initial value of the reduced sum
--&gt;Arg({64, 42})
+-&gt;Args({64, 42})
 //..
 ;</code></pre></li>
 <li>templated benchmark cases are supported</li>
@@ -1236,17 +1309,15 @@ $ my-browser report.html</code></pre>
 <div class="row align-items-center">
 <div class="col">
 <p>DAXPY optimized for SSE (simplified)</p>
-<pre><code>STREAMS 2
+<pre><code>STREAMS 2      // named STR0 and STR1
 TYPE DOUBLE
-FLOPS 2
-BYTES 24
-DESC Double-precision linear combination of two vectors
-LOADS 2
-STORES 1
-INSTR_LOOP 4
-UOPS 5
-movaps FPR7, [rip+SCALAR]
-LOOP 16
+FLOPS 2                   // 2 flops per iter
+BYTES 24                  // use 24 bytes per iter
+DESC y := alpha * x + y
+INSTR_LOOP 4              // 4 instructions per iter
+UOPS 5                    // 5 micro-ops per iter
+movaps FPR7, [rip+SCALAR] // random value for register
+LOOP 16                   // inc GPR1 by 16
 movaps   FPR1, [STR0 + GPR1*8]
 mulpd    FPR1, FPR7
 addpd    FPR1, [STR1 + GPR1*8]
@@ -1254,13 +1325,14 @@ movaps   [STR1 + GPR1*8], FPR1
 </code></pre>
 <ul>
 <li>variety of assembly kernels</li>
-<li>add kernel in abstracted assembly</li>
+<li>kernels written in abstracted assembly</li>
 <li>support for SSE, AVX, AVX512, FMA, NT-Stores</li>
 <li>manages thread and data placement</li>
 <li>hardware counter through likwid-perfctr</li>
 </ul>
 </div>
 <div class="col">
+<div class="fragment">
 <pre><code>$ likwid-bench -t daxpy_sse -w N:100MB:1
 ---------------------------------------------------
 LIKWID MICRO BENCHMARK
@@ -1271,7 +1343,6 @@ Using 1 threads
 ---------------------------------------------------
 Cycles:			5278051829
 Time:			1.316899e+00 sec
-Iterations:		128
 [...]
 MFlops/s:		1214.98
 MByte/s:		14579.71
@@ -1279,16 +1350,22 @@ MByte/s:		14579.71
 Instructions:		1900000017
 UOPs:			2600000000
 -----------------------------------------------------
-</code></pre><pre><code>$ likwid-perfctr -C 0 -g FLOPS_DP -m \
+</code></pre>
+</div>
+<div class="fragment">
+<pre><code>$ likwid-perfctr -C 0 -g FLOPS_DP -m \
 likwid-bench -t daxpy_sse -w N:100MB:1
 ---------------------------------------------------
+bench:
 MFlops/s:		1213.88
 Instructions:		1900000017
 ---------------------------------------------------
-INSTR_RETIRED_ANY	1900008000
+perfctr:
 DP MFLOP/s		1213.8804
+INSTR_RETIRED_ANY	1900008000
 ---------------------------------------------------
 </code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1324,32 +1401,49 @@ DP MFLOP/s		1213.8804
 </ul>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>dgemm at different levels of optimizations</li>
+<li>compare hand-tuned, MKL and ATLAS</li>
+</ul>
+</aside>
 </div>
 </section>
 <section id="ecm" class="slide level2">
 <h2>ecm (<a href="https://arxiv.org/abs/1208.2908">Execution-Cache-Memory</a>)</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
-<div class="col">
+<div class="col-4">
+<p>ECM Model: {T<sub>OL</sub>||T<sub>nOL</sub>|T<sub>L1L2</sub>|T<sub>L2L3</sub>|T<sub>L3MEM</sub>}</p>
 <figure>
-<img src="img/ecm-vs-roofline.png" alt="The ECM (Execution-Cache-Memory) Performance Model" class="figure-img img-fluid" style="width:50.0%" /><img src="img/ecm-triad-l2-snb.png" alt="The ECM (Execution-Cache-Memory) Performance Model" class="figure-img img-fluid" style="width:30.0%" /><figcaption><a href="https://moodle.rrze.uni-erlangen.de/pluginfile.php/11357/mod_resource/content/1/ECM.pdf">The ECM (Execution-Cache-Memory) Performance Model</a> of A(:) = B(:) + C(:) * D(:) in L2 cache with AVX on SNB</figcaption>
+<img src="img/01-8th-order-stencil.png" alt="8th Order Stencil" class="figure-img img-fluid" style="width:50.0%" /><figcaption><a href="https://software.intel.com/en-us/articles/eight-optimizations-for-3-dimensional-finite-difference-3dfd-code-with-an-isotropic-iso">3D long-range SP stencil</a></figcaption>
 </figure>
-</div>
-<div class="col">
-<figure>
-<img src="img/ecm-long-range-snb.png" alt="3D long-range SP stencil on Intel SNB" class="figure-img img-fluid" style="width:100.0%" /><figcaption><a href="https://software.intel.com/en-us/articles/eight-optimizations-for-3-dimensional-finite-difference-3dfd-code-with-an-isotropic-iso">3D long-range SP stencil</a> on Intel SNB, <a href="https://blogs.fau.de/hager/files/2010/09/ICS15_Hager.pdf">ECM Model for Stencils, G. Hager, ICS'15'</a></figcaption>
-</figure>
-</div>
-</div>
 
+<p>Model:{57||54|40|24|50}</p>
+<!-- </br>&rarr; {57&rceil;94&rceil;118&rceil;168}-->
+</div>
+<div class="col">
+<figure>
+<img src="img/ecm-long-range-snb.png" alt="3D long-range SP stencil on Intel SNB" class="figure-img img-fluid" style="width:80.0%" /><figcaption>Stencil on Intel SNB, <a href="https://blogs.fau.de/hager/files/2010/09/ICS15_Hager.pdf">ECM Model for Stencils, G. Hager, ICS'15'</a></figcaption>
+</figure>
+</div>
+</div>
+</br>
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="col">
 <ul>
 <li>Roofline does not explain saturation effects</li>
 <li>ECM puts machine characteristics into the model</li>
-<li>not all ops can be overlapped</li>
-<li>takes cache traffic optimisations into account</li>
+
 </ul>
-
-
+</div>
+<div class="col">
+<ul>
+<li>some operations can be overlapped</li>
+<li>takes cache traffic into account</li>
+</ul>
+</div>
 </div>
 </section>
 <!--<section id="roofline-for-real" class="slide level2">
@@ -1372,24 +1466,49 @@ DP MFLOP/s		1213.8804
 </div>
 </div>
 </section>-->
-<section id="rooline-tooling-kerncraft" class="slide level2">
-<h2>rooline tooling <a href="https://github.com/RRZE-HPC/kerncraft">kerncraft</a></h2>
-<pre><code>$ cat /tmp/add.c
-double a[N], b[N], c[N];
+<section id="roofline-tooling-kerncraft" class="slide level2">
+<h2>performance model with <a href="https://github.com/RRZE-HPC/kerncraft">kerncraft</a></h2>
+<pre><code>$ cat /tmp/3d.c
+double U[M][N][N];
+double V[M][N][N];
+double ROC[M][N][N];
+double c0, c1, c2, c3, c4, lap;
 
-for(int i=0; i&lt;N; ++i)
-    a[i] = b[i] + c[i];
+for(int k=4; k < M-4; k++) { for(int j=4; j < N-4; j++) { for(int i=4; i < N-4; i++) {
+            lap = c0 * V[k][j][i]
+                + c1 * ( V[ k ][ j ][i+1] + V[ k ][ j ][i-1])
+                [...10 lines...]
+                + c4 * ( V[k+4][ j ][ i ] + V[k-4][ j ][ i ]);
+            U[k][j][i] = 2.f * V[k][j][i] - U[k][j][i]
+                       + ROC[k][j][i] * lap; }}}
 </code></pre>
 <div class="fragment">
-<pre><code>$ kerncraft  -p Roofline -m /tmp/IvyBridgeEP_E5-2660v2.yml \
-  /tmp/add.c -D N 1000
-                                     kerncraft                                    
-/tmp/add.c                                     -m /tmp/IvyBridgeEP_E5-2660v2.yml
--D N 1000
------------------------------------ Roofline -----------------------------------
+<div class="container-fluid">
+<div class="row align-items-start">
+<div class="col-6">
+<pre><code>$ kerncraft -p Roofline -m SandyBridgeEP_E5-2680.yml \
+/tmp/3d.c -D N 1000 -D M 1000
+====================== kerncraft =======================
+/tmp/3d.c               -m SandyBridgeEP_E5-2680.yml
+-D N 1000 -D M 1000
+------------------------------ Roofline ----------------
 Cache or mem bound with 1 core(s)
-2.02 GFLOP/s due to L1 transfer bottleneck (bw with from copy benchmark)
-Arithmetic Intensity: 0.04 FLOP/B</code></pre>
+7.43 GFLOP/s due to MEM transfer bottleneck
+Arithmetic Intensity: 0.43 FLOP/B</code></pre>
+</div>
+<div class="col-6">
+<pre><code>$ kerncraft -p ECM -m SandyBridgeEP_E5-2680.yml \
+/tmp/3d.c -D N 1000 -D M 1000
+=========================== kerncraft ==================
+/tmp/3d.c               -m SandyBridgeEP_E5-2680.yml
+-D N 1000 -D M 1000
+------------------------------------- ECM --------------
+{ 57.0 || 54.0 | 40.0 | 24.0 | 50.3 } cy/CL
+{ 56.95 \ 94.0 \ 118.0 \ 168.3 } cy/CL
+saturating at 3.3 cores</code></pre>
+</div>
+</div>
+</div>
 <div class="container-fluid">
 <div class="row align-items-start">
 <div class="col-6">
@@ -1402,6 +1521,7 @@ Arithmetic Intensity: 0.04 FLOP/B</code></pre>
 <ul>
 <li>can infer in-core and memory bottlenecks</li>
 <li>apply performance models to benchmarked data</li>
+<li>currently only Intel (<a href="https://software.intel.com/en-us/articles/intel-architecture-code-analyzer/">IACA</a>), <a href="https://github.com/RRZE-HPC/osaca">OSACA</a> in development</li>
 </ul>
 </div>
 </div>
