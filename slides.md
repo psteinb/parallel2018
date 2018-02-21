@@ -140,7 +140,7 @@ date: Jan 11, 2018, C++ UG Dresden
 
 ![](img/opensource-550x475.png){ class="figure-img img-fluid" width="40%" }  
 
-**[github.com/psteinb/meetingcpp2017](https://github.com/psteinb/meetingcpp2017)**
+**[github.com/psteinb/parallel2018](https://github.com/psteinb/parallel2018)**
 
 
   .]
