@@ -39,13 +39,13 @@
 		<section>
 	  <h1 class="title">The Performance Addict's Toolbox</h1>
 	  	  <p>
-	    <b>Peter Steinbach</b><br>
-	    <emph>(Scionics Computer Innovation GmbH)</emph><br>
-	    <a href="mailto:steinbach@scionics.de">steinbach@scionics.de</a>
+	    <b>Thomas Röhl</b><br>
+	    <emph>(HPC group of University Erlangen-Nuremburg)</emph><br>
+	    <a href="mailto:Thomas.Roehl@fau.de">Thomas.Roehl@fau.de</a>
 	    <br><br>
 	  </p>
 	  
-	  <h3 class="date">Jan 11, 2018, C++ UG Dresden</h3>
+	  <h3 class="date">Mar 8, 2018, parallel2018</h3>
 	</section>
 		
 	<section><section id="real-life-performance-optimisation-is-never" class="titleslide slide level1"><h1>Real-life performance optimisation is never</h1></section><section id="as-simple-as-this" class="slide level2">
@@ -65,7 +65,7 @@
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/dark_Odysseus_Journey_zoom.png" class="figure-img img-fluid" style="width:100.0%" />
+<img src="img/dark_Odysseus_Journey_zoom.png" class="figure-img img-fluid" style="width:100.0%" /><figcaption><small>by Giulia Zoccarato, DensityDesign Research Lab, <a href="https://upload.wikimedia.org/wikipedia/commons/2/20/Odysseus%27_Journey.svg">CC-SA 4.0</a></small></figcaption>
 </figure>
 </div>
 </div>
@@ -86,43 +86,58 @@
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/events_header_m_quarter.jpg" class="figure-img img-fluid" style="width:50.0%" />
+<img src="img/RRZE_Aussen_2013.jpg" class="figure-img img-fluid" style="width:100.0%" />
+<figcaption><a href="https://www.rrze.fau.de">Regional Computing Center Erlangen</a>,</br>by Wolfgang Wiese, <a href="https://de.wikipedia.org/wiki/Regionales_Rechenzentrum_Erlangen#/media/File:RRZE_Geb%C3%A4ude_2013.jpg">CC-BY 3.0</a></figcaption>
 </figure>
 </div>
 <div class="col">
-<p><strong><a href="www.scionics.de">Scionics Computer Innovation GmbH</a></strong></p>
+<p><strong><a href="https://hpc.fau.de">HPC group at Regional Computing Center Erlangen</a></strong></p>
 <ul>
-<li>software and consulting company</li>
-<li>founded in 2001 in Dresden, Germany</li>
-<li>expertise in data analysis, bioinformatics, image analysis, HPC, ...</li>
+<li>support users on our HPC infrastructure</li>
+<li>software and research projects related to node-level performance engineering</li>
+
+<li>developer of the <a href="https://moodle.rrze.uni-erlangen.de/pluginfile.php/11357/mod_resource/content/1/ECM.pdf">Execution-Cache-Model</a> (refinement of the Roofline model)</li>
+<li>tool development</li>
+</ul>
+<p><strong><a href="https://www.rrze.fau.de/person/thomas-roehl/">Thomas Röhl</a></strong></p>
+<ul>
+<li>topics: performance engineering,  node-level optimisation</li>
+<li>main developer of the <a href="https://github.com/RRZE-HPC/likwid/wiki">LIKWID</a>, a tool suite for performance oriented programmers</li>
 </ul>
 </div>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>2h by car south of Berlin<br />
+<li>2h by car north of Munich<br />
 </li>
-<li>NEXT: biggest client = CBG</li>
+<li>NEXT: University</li>
 </ul>
 </aside>
-</section><section id="our-client" class="slide level2">
-<h2>Our Client</h2>
+</section><section id="the-university" class="slide level2">
+<h2>The university</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="img/800px-MPI-CBG_building_outside_4pl.jpg" alt="MPI for Molecular Cell Biology and Genetics" class="figure-img img-fluid" style="width:100.0%" /><figcaption>MPI for Molecular Cell Biology and Genetics</figcaption>
+<img src="img/Schloss-Erlangen02.JPG" alt="Main building of University Erlangen-Nuremburg" class="figure-img img-fluid" style="width:100.0%" /><figcaption>Main building of University Erlangen-Nuremburg</figcaption>
+
 </figure>
-<p><a href="www.mpi-cbg.de">mpi-cbg.de</a></p>
+<p><a href="www.fau.de">www.fau.de</a></p>
+<p><small>Foto by <a href=http://commons.wikimedia.org/wiki/User:Selby>Selby</a>, <a href="http://www.wikiwand.com/de/Friedrich-Alexander-Universit%C3%A4t_Erlangen-N%C3%BCrnberg">CC-SA 3.0</a></small></p>
 </div>
 <div class="col">
+<p><strong><a href="https://www.fau.de">Friedrich-Alexander University</br>Erlangen-Nuremburg</a></strong></p>
 <ul>
-<li>500+ staff</li>
-<li>my role: <em>Scientific Software Engineer</em></li>
-<li>support users on our HPC infrastructure</li>
-<li>software projects related to performance (think multi-threaded, GPUs, ..)</li>
+<li>&asymp; 40000 students</li>
+<li>&asymp; 250 majors</li>
+<li>Top3 @ Bavaria, Top 10 @ Germany</li>
 </ul>
+<figure>
+<img src="img/erlangen_map.gif" alt="Location of Erlangen" class="figure-img img-fluid" style="width:30.0%" />
+<!--<figcaption>Location of Erlangen</figcaption>-->
+
+</figure>
 </div>
 </div>
 </div>
@@ -138,9 +153,11 @@
 <div class="row justify-content-center">
 <div class="col">
 <figure>
-<img src="img/opensource-550x475.png" class="figure-img img-fluid" style="width:40.0%" />
+<img src="img/opensource-550x475.png" class="figure-img img-fluid" style="width:30.0%" />
 </figure>
-<p><strong><a href="https://github.com/psteinb/meetingcpp2017">github.com/psteinb/meetingcpp2017</a></strong></p>
+
+<p><a href="https://github.com/psteinb/parallel2018">github.com/psteinb/parallel2018</a></p>
+<p>Original talk by Peter Steinbach (Scionics Computer Innovation GmbH)</p>
 </div>
 </div>
 </div>
@@ -153,7 +170,7 @@
 <div class="row align-items-center">
 <div class="col-8">
 <figure>
-<img src="img/Mars_Climate_Orbiter_2.jpg" alt="Mars Climate Orbiter (1998)" class="figure-img img-fluid" style="width:70.0%" /><figcaption><a href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter#Encounter_with_Mars">Mars Climate Orbiter (1998)</a></figcaption>
+<img src="img/Mars_Climate_Orbiter_2.jpg" alt="Mars Climate Orbiter (1998)" class="figure-img img-fluid" style="width:70.0%" /><figcaption><a href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter#Encounter_with_Mars">Mars Climate Orbiter (1998)</a>, Public Domain</figcaption>
 </figure>
 </div>
 <div class="col-4">
@@ -172,7 +189,7 @@
 <section><section id="performance-outside-in" class="titleslide slide level1"><h1>Performance Outside-In</h1></section><section id="one-day-as-a-performance-engineer" class="slide level2">
 <h2>One day as a Performance Engineer</h2>
 <figure>
-<img src="img/flickr_ORourke_2_busy_to_improve_framed.png" alt="Alan O&#39;Rourke, Too Busy To Improve - Performance Management - Square Wheels, CC" class="figure-img img-fluid" style="width:70.0%" /><figcaption>Alan O'Rourke, <a href="https://www.flickr.com/photos/toddle_email_newsletters/15412982829/in/photostream/">Too Busy To Improve - Performance Management - Square Wheels</a>, CC</figcaption>
+<img src="img/flickr_ORourke_2_busy_to_improve_framed.png" alt="Alan O&#39;Rourke, Too Busy To Improve - Performance Management - Square Wheels, CC" class="figure-img img-fluid" style="width:70.0%" /><figcaption>Alan O'Rourke, <a href="https://www.flickr.com/photos/toddle_email_newsletters/15412982829/in/photostream/">Too Busy To Improve - Performance Management - Square Wheels</a>, <a href="http://audiencestack.com/static/blog.html">CC BY 2.0</a></figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -230,6 +247,7 @@ John</code></pre>
 <figure>
 <img src="img/task_manager_small.png" class="figure-img img-fluid" style="width:80.0%" />
 </figure>
+<p>add hardware counter data: <a href="https://github.com/opcm/pcm">PCM</a>
 </div>
 </div>
 </div>
@@ -244,9 +262,9 @@ $ dd if=/dev/zero of=/dev/shm/2gb.zeros bs=1G count=2
 2+0 records in
 2+0 records out
 2147483648 bytes (2.1 GB) copied, 1.14782 s, 1.9 GB/s</code></pre>
-<p> </p>
+<p>  </p>
 <p><strong>What can your hardware typically do?</strong></p>
-<p>dd, <a href="http://www.nersc.gov/users/computational-systems/cori/nersc-8-procurement/trinity-nersc-8-rfp/nersc-8-trinity-benchmarks/ior/">ior</a>, memhog, <a href="https://www.cs.virginia.edu/stream/">stream</a>, ...</p>
+<p>dd, <a href="http://www.nersc.gov/users/computational-systems/cori/nersc-8-procurement/trinity-nersc-8-rfp/nersc-8-trinity-benchmarks/ior/">ior</a>, memhog, <a href="https://www.cs.virginia.edu/stream/">stream</a>, <a href="https://github.com/RRZE-HPC/likwid/wiki/Likwid-Bench">LIKWID</a>, ...</p>
 <aside class="notes">
 <ul>
 <li>to search for the bottleneck, know your performance without it</li>
@@ -344,7 +362,7 @@ $ ./flamegraph.pl out.folded &gt; perf_samples.svg</code></pre>
 </div>
 </div>
 </section><section id="ethereum-mining-as-flamegraph" class="slide level2">
-<h2>Ethereum Mining <a href="figure/flamegraph/ethminer-cuda-simulate.svg">as FlameGraph</a></h2>
+<h2>Ethereum Mining as <a href="figure/flamegraph/ethminer-cuda-simulate.svg">FlameGraph</a></h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
@@ -401,7 +419,7 @@ $ ./flamegraph.pl out.folded &gt; perf_samples.svg</code></pre>
 </ul>
 </aside>
 </section><section id="valgrind-kcachegrind" class="slide level2">
-<h2><a href="valgrind.org">valgrind</a> + kcachegrind</h2>
+<h2><a href="http://www.valgrind.org/">valgrind</a> + kcachegrind</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
@@ -470,6 +488,7 @@ nctions with latencies: 5
  funcid      count [      min,       med,       90p,  ...]       sum  function    
       1          1 [ 7.338530,  7.338530,  7.338530,  ...]  7.338530  &lt;invalid&gt;:0:0: main
       2       1275 [ 0.000005,  0.000011,  0.000012,  ...]  0.013064  &lt;invalid&gt;:0:0: void my_axpy&lt;2u, vector&lt;float&gt;, vector&lt;float&gt;, vector&lt;float&gt; &gt;(vector&lt;float&gt;&amp;, vector&lt;float&gt; const&amp;, vector&lt;float&gt; const&amp;)</code></pre>
+<p>integration in other tools started: <a href="https://www.vampir.eu/">Vampir</a></p>
 <aside class="notes">
 <ul>
 <li>introduced in llvm4</li>
@@ -561,7 +580,7 @@ List of pre-defined events (to be used in -e):
 <ul>
 <li>perf event list depends on kernel version</li>
 <li>hardware counters are not portable (specification change by vendors)</li>
-<li>alternative: <a href="https://github.com/andikleen/pmu-tools">ocperf</a></li>
+<li>alternative: <a href="https://github.com/andikleen/pmu-tools">ocperf</a> </li>
 </ul>
 </div>
 </div>
@@ -586,16 +605,16 @@ List of pre-defined events (to be used in -e):
 <div class="row align-items-start">
 <div class="col">
 <ul>
-<li><a href="https://github.com/RRZE-HPC/likwid">github.com/RRZE-HPC/likwid</a></li>
-<li>open source Performance monitoring and benchmarking suite</li>
-<li>Linux only</li>
+<li><a href="https://github.com/RRZE-HPC/likwid/wiki">github.com/RRZE-HPC/likwid</a></li>
+<li>performance monitoring and benchmarking suite</li>
+<li>Linux only, GPL</li>
 </ul>
 </div>
 <div class="col">
 <ul>
-<li>profiling through hardware counters (consistent meta markers for portability)</li>
+<li>profiling through hardware counters<br>(consistent eventset names for portability)</li>
 <li>exploration through monitoring</li>
-<li>marker API for C, C++, java and python</li>
+<li>instrumentation API for C, C++, java and python</li>
 </ul>
 </div>
 </div>
@@ -655,59 +674,121 @@ int main(int argc, char** argv){
 <div class="row align-items-start">
 <div class="col-6">
 <p>Use Case</p>
-<pre><code># export OMP_NUM_THREADS=1
-# path/to/likwid-perfctr -f -c 0 -g FALSE_SHARE \
-numactl -m0 -C0 ./my_app
+<pre><code>$ export OMP_NUM_THREADS=1
+$ path/to/likwid-perfctr -C 0 -g FALSE_SHARE ./my_app
 +----------------------------------|--------------+
 |              Metric              |    Core 0    |
 +----------------------------------|--------------+
-//..
 |  Local LLC false sharing [MByte] |       0.0008 |
 |   Local LLC false sharing rate   | 5.608215e-10 |
-//..
 +----------------------------------|--------------+
-
-# export OMP_NUM_THREADS=4
-# path/to/likwid-perfctr -f -c 0-4 -g FALSE_SHARE \
-numactl -m0 -C0-3 ./my_app
+</code><code>
+$ export OMP_NUM_THREADS=4
+$ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./my_app
 +---------------------------------------|--------------|
 |                 Metric                |      Sum     |
 +---------------------------------------|--------------|
-#..
 |  Local LLC false sharing [MByte] STAT |    2973.7637 |
 |   Local LLC false sharing rate STAT   |       0.0081 |
-#..
 +---------------------------------------|--------------|</code></pre>
 </div>
 <div class="col-6">
-<p>Stream Benchmark as Reference</p>
-<pre><code># export OMP_NUM_THREADS=1
-# path/to/likwid-perfctr -f -c 0 -g FALSE_SHARE \
-numactl -m0 -C0 ./stream
+<p><a href="https://www.cs.virginia.edu/stream/">stream</a> benchmark as reference</p>
+<pre><code>$ export OMP_NUM_THREADS=1
+$ path/to/likwid-perfctr -C 0 -g FALSE_SHARE ./stream
 +----------------------------------|--------------+
 |              Metric              |    Core 0    |
 +----------------------------------|--------------+
-#..
 |  Local LLC false sharing [MByte] |       0.0006 |
 |   Local LLC false sharing rate   | 6.057282e-10 |
-#..
 +----------------------------------|--------------+
-
-# export OMP_NUM_THREADS=4
-# path/to/likwid-perfctr -f -c 0-4 -g FALSE_SHARE \
-numactl -m0 -C0-3 ./stream
+</code><code>
+$ export OMP_NUM_THREADS=4
+$ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
 +---------------------------------------|--------------|
 |                 Metric                |      Sum     |
 +---------------------------------------|--------------|
-#..
 |  Local LLC false sharing [MByte] STAT |       0.1067 |
 |   Local LLC false sharing rate STAT   | 4.080027e-07 |
-#..
 +---------------------------------------|--------------|</code></pre>
 </div>
 </div>
+<p><center><strong>Warning</strong>: some events provide only qualitative but not quantitative results</center></p>
 </div>
-</section><section id="bottom-line-1" class="slide level2">
+</section>
+
+<section id="instrumentation-likwid" class="slide level2">
+<h2>Use LIKWID's MarkerAPI</h2>
+<p><strong>Interested in just a code region?</strong></p>
+<div class="container-fluid">
+<div class="row align-items-start">
+<div class="col-6">
+<p>Instrumented version of <a href="https://www.cs.virginia.edu/stream/">stream</a>'s triad</p>
+<pre><code>#include &quot;omp.h&quot;
+#include &quot;likwid.h&quot;
+
+#define ITER 100
+#define SIZE 40000000
+int main(int argc, char* argv[])
+{
+    //allocate and initialize a, b, c and d
+#pragma omp parallel
+{
+    for (int k=0; k&lt;ITER; k++)
+    {
+        LIKWID_MARKER_START(&quot;triad&quot;);
+#pragma simd
+#pragma omp for
+        for (int j=0; j&lt;SIZE; j++)
+        {
+            a[j] = b[j] +  c[j] * d[j];
+        }   
+        LIKWID_MARKER_STOP(&quot;triad&quot;);
+    }
+}
+    // check result in a and free a, b, c and d
+    return 0;
+}
+</code></pre>
+</div>
+<div class="col-6">
+<p></p>
+<ul>
+<li>Include MarkerAPI around code regions</li>
+<li>Link with LIKWID lib and -DLIKWID_PERFMON</li>
+<li>Specify events and -m on perfctr cmdline</li>
+<li>Results are grouped by region string</li>
+</ul>
+<div class="fragment">
+<pre><code>$ likwid-perfctr -C &lt;cpus&gt; -g &lt;eventset&gt; -m ./a.out
+[...]
+Region triad, Group 1: L3
++-------------------+----------+
+|    Region Info    |  Core 0  |
++-------------------+----------+
+| RDTSC Runtime [s] | 0.846960 |
+|     call count    |      100 |
++-------------------+----------+
+[...raw counter values...]
++-------------------------------+------------+
+|             Metric            |   Core 0   |
++-------------------------------+------------+
+|      Runtime (RDTSC) [s]      |     0.8470 |
+|      Runtime unhalted [s]     |     0.8451 |
+|  L3 load bandwidth [MBytes/s] | 15121.3486 |
+| L3 evict bandwidth [MBytes/s] |  3298.9553 |
+|    L3 bandwidth [MBytes/s]    | 18420.3040 |
++-------------------------------+------------+
+[...more results...]
+</code></pre>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="bottom-line-1" class="slide level2">
 <h2>Bottom Line</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -733,18 +814,15 @@ numactl -m0 -C0-3 ./stream
 </ul>
 </aside>
 </section></section>
-<section><section id="benchmarks-and-how-to-create-them" class="titleslide slide level1" data-background-image="img/dark_Odysseus_Journey_500less_1200px.png" style="margin-top: -200px; background: rgba(1,21,26, 0.8); border-radius: 20px;"><h1>Benchmarks and how to create them</h1></section><section id="faster-code" class="slide level2">
-<h2>faster code?</h2>
-<p><a href="https://youtu.be/FnGCDLhaxKU?t=6143">Chandler Carruth, Understanding Compiler Optimization, MeetingCPP 2015</a></p>
-<blockquote>
-<p>Klaus Iglberger: Guys that do know a lot about performance, do a lot of manual unrolling (manual vectorization). Apparently they don't trust the compiler too much. What is your take on this?</p>
-</blockquote>
-<div class="fragment">
-<blockquote>
-<p>Chandler: How do you define &quot;people who know a lot about performance&quot;? Serious question. So I work with Google's optimisation team who is responsible for making our C++ code run fast. And I have never seen them manually unroll a loop.</p>
-</blockquote>
-</div>
-</section><section id="chrono-is-your-friend" class="slide level2">
+<section><section id="benchmarks-and-how-to-create-them" class="titleslide slide level1" data-background-image="img/dark_Odysseus_Journey_500less_1200px.png" style="margin-top: -200px; background: rgba(1,21,26, 0.8); border-radius: 20px;"><h1>Benchmarks and how to create them</h1></section>
+
+<section id="start-with-time" class="slide level2">
+<h1>First, take the time</h1>
+<figure>
+<img src="img/Louis_Moinets_Compteur_de_Tierces.jpg" alt="Compteur de Tierces by Louis Moinet, CC-BY 3.0" class="figure-img img-fluid" style="width:40.0%" /><figcaption>Compteur de Tierces by <a href="https://en.wikipedia.org/wiki/Louis_Moinet">Louis Moinet</a>, <a href="https://commons.wikimedia.org/wiki/File:Louis_Moinet%27s_%22Compteur_de_Tierces%22.jpg">CC-BY 3.0</a></figcaption>
+</figure>
+</section>
+<section id="chrono-is-your-friend" class="slide level2">
 <h2>chrono is your friend</h2>
 <pre><code>#include &lt;chrono&gt;
 #include &lt;iostream&gt;
@@ -855,7 +933,8 @@ int main(int argc, char** argv){
     else
         std::cout &lt;&lt; &quot;Never mind!&quot; &lt;&lt; std::endl;
 }</code></pre>
-</section><section id="why" class="slide level2">
+</section>
+<!--<section id="why" class="slide level2">
 <h2>Why?</h2>
 <blockquote>
 <p>... It's a simple Python interface around a blazing fast C++ library ...</p>
@@ -872,7 +951,8 @@ int main(int argc, char** argv){
 <li>people expect C++ to be faster!!</li>
 </ul>
 </aside>
-</section><section id="life-as-a-reviewer" class="slide level2">
+</section>-->
+<section id="life-as-a-reviewer" class="slide level2">
 <h2>Life as a reviewer</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -880,7 +960,8 @@ int main(int argc, char** argv){
 <figure>
 <img src="img/hoefler_scientific_benchmarking_table1.png" class="figure-img img-fluid" style="width:100.0%" />
 </figure>
-<p>T. Hoefler et al, <a href="https://dl.acm.org/citation.cfm?id=2807644">&quot;Scientific Benchmarking of Parallel Computing Systems - Twelve ways to tell the masses when reporting performance results&quot;</a>, <br>SC '15 Proceedings, 2015</p>
+<p>T. Hoefler et al, <a href="https://dl.acm.org/citation.cfm?id=2807644">&quot;Scientific Benchmarking of Parallel Computing Systems - Twelve ways to tell the masses when reporting performance results&quot;</a>, SC '15 Proceedings, 2015</p>
+<p>Problem also in other fields: <a href="http://www.sciencemag.org/news/2018/02/missing-data-hinder-replication-artificial-intelligence-studies">AI</a></p>
 </div>
 </div>
 </div>
@@ -978,7 +1059,8 @@ int main(int argc, char** argv){
 </div>
 </div>
 </div>
-</section><section id="benchmark-in-action" class="slide level2">
+</section>
+<!--<section id="benchmark-in-action" class="slide level2">
 <h2>benchmark: in action</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -995,7 +1077,8 @@ int main(int argc, char** argv){
 </div>
 </div>
 </div>
-</section><section id="benchmark-simple-approach" class="slide level2">
+</section>-->
+<section id="benchmark-simple-approach" class="slide level2">
 <h2>benchmark: simple approach</h2>
 <div class="container-fluid">
 <div class="row align-items-start">
@@ -1055,17 +1138,19 @@ BENCHMARK(BM_range_based);
 BENCHMARK_MAIN();</code></pre>
 </div>
 </div>
+<p>Analysis by <a href="https://www.youtube.com/watch?v=smqT9Io_bKo">Matt Godbolt at CppCon2017</a></p>
 </div>
 </section><section id="benchmark-simple-approach-output" class="slide level2">
 <h2>benchmark: simple approach output</h2>
 <pre><code>Run on (4 X 3600 MHz CPU s)
 2017-11-08 10:24:43
-***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisyand will incur extra overhead.
 --------------------------------------------------------
 Benchmark                 Time           CPU Iterations
 --------------------------------------------------------
 BM_integer_index     922920 ns     915531 ns        764
 BM_range_based       937344 ns     929681 ns        768</code></pre>
+<p>CPU scaling can be fixed with LIKWID</p>
 </section><section id="benchmark-advanced" class="slide level2">
 <h2>benchmark: advanced</h2>
 <div class="container-fluid">
@@ -1105,7 +1190,7 @@ BENCHMARK_MAIN();</code></pre>
 <li><p>multiple arguments are also supported</p>
 <pre><code>BENCHMARK_TEMPLATE(BM_integer_index,int)
 //42 is the initial value of the reduced sum
--&gt;Arg({64, 42})
+-&gt;Args({64, 42})
 //..
 ;</code></pre></li>
 <li>templated benchmark cases are supported</li>
@@ -1166,7 +1251,7 @@ BM_range_based&lt;float&gt;/134217728    122908318 ns  122219268 ns          6
 <div class="row align-items-center">
 <div class="col">
 <figure>
-<img src="src/libbenchmark/comparison_O2.png" alt="gcc 6.4.1, libbbenchmark 1.3,  code available in this repo" class="figure-img img-fluid" style="width:100.0%" /><figcaption>gcc 6.4.1, libbbenchmark 1.3, <br><a href="src/libbenchmark/README.md">code available in this repo</a></figcaption>
+<img src="src/libbenchmark/comparison_O2.png" alt="gcc 6.4.1, libbenchmark 1.3,  code available in this repo" class="figure-img img-fluid" style="width:100.0%" /><figcaption>gcc 6.4.1, libbenchmark 1.3, <br><a href="https://github.com/vizidrix/libbenchmark">code available in this repo</a></figcaption>
 </figure>
 </div>
 <div class="col">
@@ -1180,7 +1265,8 @@ $ my-browser report.html</code></pre>
 </div>
 </div>
 </div>
-</section><section id="there-is-more" class="slide level2">
+</section>
+<!--<section id="there-is-more" class="slide level2">
 <h2>There is more</h2>
 <table>
 <colgroup>
@@ -1216,7 +1302,75 @@ $ my-browser report.html</code></pre>
 </tr>
 </tbody>
 </table>
-</section><section id="where-to-stop" class="slide level2">
+</section>-->
+<section id="bench-deeper" class="slide level2">
+<h2>Do deeper? LIKWID micro-benchmarking</h2>
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="col">
+<p>DAXPY optimized for SSE (simplified)</p>
+<pre><code>STREAMS 2      // named STR0 and STR1
+TYPE DOUBLE
+FLOPS 2                   // 2 flops per iter
+BYTES 24                  // use 24 bytes per iter
+DESC y := alpha * x + y
+INSTR_LOOP 4              // 4 instructions per iter
+UOPS 5                    // 5 micro-ops per iter
+movaps FPR7, [rip+SCALAR] // random value for register
+LOOP 16                   // inc GPR1 by 16
+movaps   FPR1, [STR0 + GPR1*8]
+mulpd    FPR1, FPR7
+addpd    FPR1, [STR1 + GPR1*8]
+movaps   [STR1 + GPR1*8], FPR1
+</code></pre>
+<ul>
+<li>variety of assembly kernels</li>
+<li>kernels written in abstracted assembly</li>
+<li>support for SSE, AVX, AVX512, FMA, NT-Stores</li>
+<li>manages thread and data placement</li>
+<li>hardware counter through likwid-perfctr</li>
+</ul>
+</div>
+<div class="col">
+<div class="fragment">
+<pre><code>$ likwid-bench -t daxpy_sse -w N:100MB:1
+---------------------------------------------------
+LIKWID MICRO BENCHMARK
+Test: daxpy_sse
+---------------------------------------------------
+Using 1 work groups
+Using 1 threads
+---------------------------------------------------
+Cycles:			5278051829
+Time:			1.316899e+00 sec
+[...]
+MFlops/s:		1214.98
+MByte/s:		14579.71
+[...]
+Instructions:		1900000017
+UOPs:			2600000000
+-----------------------------------------------------
+</code></pre>
+</div>
+<div class="fragment">
+<pre><code>$ likwid-perfctr -C 0 -g FLOPS_DP -m \
+likwid-bench -t daxpy_sse -w N:100MB:1
+---------------------------------------------------
+bench:
+MFlops/s:		1213.88
+Instructions:		1900000017
+---------------------------------------------------
+perfctr:
+DP MFLOP/s		1213.8804
+INSTR_RETIRED_ANY	1900008000
+---------------------------------------------------
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="where-to-stop" class="slide level2">
 <h2>Where to stop?</h2>
 <ul>
 <li><strong>clearify upfront</strong></li>
@@ -1247,8 +1401,52 @@ $ my-browser report.html</code></pre>
 </ul>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>dgemm at different levels of optimizations</li>
+<li>compare hand-tuned, MKL and ATLAS</li>
+</ul>
+</aside>
 </div>
-</section><section id="roofline-for-real" class="slide level2">
+</section>
+<section id="ecm" class="slide level2">
+<h2>ecm (<a href="https://arxiv.org/abs/1208.2908">Execution-Cache-Memory</a>)</h2>
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="col-4">
+<p>ECM Model: {T<sub>OL</sub>||T<sub>nOL</sub>|T<sub>L1L2</sub>|T<sub>L2L3</sub>|T<sub>L3MEM</sub>}</p>
+<figure>
+<img src="img/01-8th-order-stencil.png" alt="8th Order Stencil" class="figure-img img-fluid" style="width:50.0%" /><figcaption><a href="https://software.intel.com/en-us/articles/eight-optimizations-for-3-dimensional-finite-difference-3dfd-code-with-an-isotropic-iso">3D long-range SP stencil</a></figcaption>
+</figure>
+
+<p>Model:{57||54|40|24|50}</p>
+<!-- </br>&rarr; {57&rceil;94&rceil;118&rceil;168}-->
+</div>
+<div class="col">
+<figure>
+<img src="img/ecm-long-range-snb.png" alt="3D long-range SP stencil on Intel SNB" class="figure-img img-fluid" style="width:80.0%" /><figcaption>Stencil on Intel SNB, <a href="https://blogs.fau.de/hager/files/2010/09/ICS15_Hager.pdf">ECM Model for Stencils, G. Hager, ICS'15'</a></figcaption>
+</figure>
+</div>
+</div>
+</br>
+<div class="container-fluid">
+<div class="row align-items-center">
+<div class="col">
+<ul>
+<li>Roofline does not explain saturation effects</li>
+<li>ECM puts machine characteristics into the model</li>
+
+</ul>
+</div>
+<div class="col">
+<ul>
+<li>some operations can be overlapped</li>
+<li>takes cache traffic into account</li>
+</ul>
+</div>
+</div>
+</section>
+<!--<section id="roofline-for-real" class="slide level2">
 <h2>roofline for real</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -1267,24 +1465,50 @@ $ my-browser report.html</code></pre>
 </div>
 </div>
 </div>
-</section><section id="rooline-tooling-kerncraft" class="slide level2">
-<h2>rooline tooling <a href="https://github.com/RRZE-HPC/kerncraft">kerncraft</a></h2>
-<pre><code>$ cat /tmp/add.c
-double a[N], b[N], c[N];
+</section>-->
+<section id="roofline-tooling-kerncraft" class="slide level2">
+<h2>performance model with <a href="https://github.com/RRZE-HPC/kerncraft">kerncraft</a></h2>
+<pre><code>$ cat /tmp/3d.c
+double U[M][N][N];
+double V[M][N][N];
+double ROC[M][N][N];
+double c0, c1, c2, c3, c4, lap;
 
-for(int i=0; i&lt;N; ++i)
-    a[i] = b[i] + c[i];
+for(int k=4; k < M-4; k++) { for(int j=4; j < N-4; j++) { for(int i=4; i < N-4; i++) {
+            lap = c0 * V[k][j][i]
+                + c1 * ( V[ k ][ j ][i+1] + V[ k ][ j ][i-1])
+                [...10 lines...]
+                + c4 * ( V[k+4][ j ][ i ] + V[k-4][ j ][ i ]);
+            U[k][j][i] = 2.f * V[k][j][i] - U[k][j][i]
+                       + ROC[k][j][i] * lap; }}}
 </code></pre>
 <div class="fragment">
-<pre><code>$ kerncraft  -p Roofline -m /tmp/IvyBridgeEP_E5-2660v2.yml \
-  /tmp/add.c -D N 1000
-                                     kerncraft                                    
-/tmp/add.c                                     -m /tmp/IvyBridgeEP_E5-2660v2.yml
--D N 1000
------------------------------------ Roofline -----------------------------------
+<div class="container-fluid">
+<div class="row align-items-start">
+<div class="col-6">
+<pre><code>$ kerncraft -p Roofline -m SandyBridgeEP_E5-2680.yml \
+/tmp/3d.c -D N 1000 -D M 1000
+====================== kerncraft =======================
+/tmp/3d.c               -m SandyBridgeEP_E5-2680.yml
+-D N 1000 -D M 1000
+------------------------------ Roofline ----------------
 Cache or mem bound with 1 core(s)
-2.02 GFLOP/s due to L1 transfer bottleneck (bw with from copy benchmark)
-Arithmetic Intensity: 0.04 FLOP/B</code></pre>
+7.43 GFLOP/s due to MEM transfer bottleneck
+Arithmetic Intensity: 0.43 FLOP/B</code></pre>
+</div>
+<div class="col-6">
+<pre><code>$ kerncraft -p ECM -m SandyBridgeEP_E5-2680.yml \
+/tmp/3d.c -D N 1000 -D M 1000
+=========================== kerncraft ==================
+/tmp/3d.c               -m SandyBridgeEP_E5-2680.yml
+-D N 1000 -D M 1000
+------------------------------------- ECM --------------
+{ 57.0 || 54.0 | 40.0 | 24.0 | 50.3 } cy/CL
+{ 56.95 \ 94.0 \ 118.0 \ 168.3 } cy/CL
+saturating at 3.3 cores</code></pre>
+</div>
+</div>
+</div>
 <div class="container-fluid">
 <div class="row align-items-start">
 <div class="col-6">
@@ -1297,6 +1521,7 @@ Arithmetic Intensity: 0.04 FLOP/B</code></pre>
 <ul>
 <li>can infer in-core and memory bottlenecks</li>
 <li>apply performance models to benchmarked data</li>
+<li>currently only Intel (<a href="https://software.intel.com/en-us/articles/intel-architecture-code-analyzer/">IACA</a>), <a href="https://github.com/RRZE-HPC/osaca">OSACA</a> in development</li>
 </ul>
 </div>
 </div>
@@ -1346,7 +1571,8 @@ Arithmetic Intensity: 0.04 FLOP/B</code></pre>
 </div>
 </div>
 </div>
-</section><section id="final-words" class="slide level2">
+</section>
+<!--<section id="final-words" class="slide level2">
 <h2>Final Words</h2>
 <blockquote>
 <p><em>C++ is a language considered &quot;fast&quot;.</em></p>
@@ -1360,7 +1586,8 @@ Arithmetic Intensity: 0.04 FLOP/B</code></pre>
 <p> </p>
 <p><em>Thank you for your attention!</em></p>
 </div>
-</section></section>
+</section>-->
+</section>
 <section><section id="backup" class="titleslide slide level1"><h1>Backup</h1></section><section id="section" class="slide level2">
 <h2></h2>
 <figure>
