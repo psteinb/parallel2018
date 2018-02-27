@@ -636,13 +636,14 @@ List of pre-defined events (to be used in -e):
 <ul>
 <li><a href="https://github.com/RRZE-HPC/likwid/wiki">github.com/RRZE-HPC/likwid</a></li>
 <li>performance monitoring and benchmarking suite</li>
+<li>exploration through monitoring</li>
 <li>Linux only, GPL</li>
 </ul>
 </div>
 <div class="col">
 <ul>
 <li>profiling through hardware counters<br>(consistent eventset names for portability)</li>
-<li>exploration through monitoring</li>
+<li>supports almost all provided counters and events</li>
 <li>instrumentation API for C, C++, java and python</li>
 </ul>
 </div>
@@ -747,8 +748,8 @@ $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
 </section>
 
 <section id="instrumentation-likwid" class="slide level2">
-<h2>Use LIKWID's MarkerAPI</h2>
-<p><strong>Interested in just a code region?</strong></p>
+<h2>Interested in just a code region?</h2>
+<p><strong>LIKWID MarkerAPI</strong></p>
 <div class="container-fluid">
 <div class="row align-items-start">
 <div class="col-6">
@@ -760,6 +761,7 @@ $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
 #define SIZE 40000000
 int main(int argc, char* argv[])
 {
+    LIKWID_MARKER_INIT;
     //allocate and initialize a, b, c and d
 #pragma omp parallel
 {
@@ -770,12 +772,13 @@ int main(int argc, char* argv[])
 #pragma omp for
         for (int j=0; j&lt;SIZE; j++)
         {
-            a[j] = b[j] +  c[j] * d[j];
+            a[j] = b[j] + c[j] * d[j];
         }   
         LIKWID_MARKER_STOP(&quot;triad&quot;);
     }
 }
     // check result in a and free a, b, c and d
+    LIKWID_MARKER_CLOSE;
     return 0;
 }
 </code></pre>
@@ -783,7 +786,7 @@ int main(int argc, char* argv[])
 <div class="col-6">
 <p></p>
 <ul>
-<li>Include MarkerAPI around code regions</li>
+<li>Add MarkerAPI calls around code regions</li>
 <li>Link with LIKWID lib and -DLIKWID_PERFMON</li>
 <li>Specify events and -m on perfctr cmdline</li>
 <li>Results are grouped by region string</li>
@@ -1179,7 +1182,7 @@ Benchmark                 Time           CPU Iterations
 --------------------------------------------------------
 BM_integer_index     922920 ns     915531 ns        764
 BM_range_based       937344 ns     929681 ns        768</code></pre>
-<p>CPU scaling can be fixed with LIKWID</p>
+<p>CPU scaling can be fixed with <a href="https://github.com/RRZE-HPC/likwid/wiki/likwid-setFrequencies">LIKWID</a> or <a href="https://github.com/torvalds/linux/tree/master/tools/power/cpupower">cpupower</a></p>
 </section><section id="benchmark-advanced" class="slide level2">
 <h2>benchmark: advanced</h2>
 <div class="container-fluid">
