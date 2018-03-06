@@ -84,7 +84,7 @@
 <li>Benchmarks and how to create them</li>
 </ol>
 </section></section>
-<section><section id="who-am-i-and-motivation" class="titleslide slide level1"><h1>Who-are-we and Motivation</h1></section><section id="who-am-i" class="slide level2">
+<section><section id="who-are-we" class="titleslide slide level1"><h1>Who-are-we</h1></section><section id="who-are-we" class="slide level2">
 <h2>Who am I?</h2>
 <div class="container-fluid">
 <div class="row align-items-center">
@@ -309,7 +309,7 @@ $ dd if=/dev/zero of=/dev/shm/2gb.zeros bs=1G count=2
 [ perf record: Woken up 1 times to write data ]
 [ perf record: Captured and wrote 0.023 MB perf.data (75 samples) ]
 $ perf report --stdio
-no symbols found in /usr/bin/dd, maybe install a debug package?
+no symbols found in ./my-slow-binary, maybe install a debug package?
 # ...
 # Total Lost Samples: 0
 #
@@ -517,7 +517,9 @@ nctions with latencies: 5
  funcid      count [      min,       med,       90p,  ...]       sum  function    
       1          1 [ 7.338530,  7.338530,  7.338530,  ...]  7.338530  &lt;invalid&gt;:0:0: main
       2       1275 [ 0.000005,  0.000011,  0.000012,  ...]  0.013064  &lt;invalid&gt;:0:0: void my_axpy&lt;2u, vector&lt;float&gt;, vector&lt;float&gt;, vector&lt;float&gt; &gt;(vector&lt;float&gt;&amp;, vector&lt;float&gt; const&amp;, vector&lt;float&gt; const&amp;)</code></pre>
-<p>integration in other tools started: <a href="https://www.vampir.eu/">Vampir</a></p>
+<p>Project started by Google</p>
+<p>Part of the LLVM Compiler Infrastructure (since version 4, flamegraphs version 6)</p>
+<p>Integration in other tools started: <a href="https://www.vampir.eu/">Vampir</a></p>
 <aside class="notes">
 <ul>
 <li>introduced in llvm4</li>
@@ -765,12 +767,12 @@ int main(int argc, char* argv[])
     //allocate and initialize a, b, c and d
 #pragma omp parallel
 {
-    for (int k=0; k&lt;ITER; k++)
+    for (int k = 0; k &lt; ITER; k++)
     {
         LIKWID_MARKER_START(&quot;triad&quot;);
 #pragma simd
 #pragma omp for
-        for (int j=0; j&lt;SIZE; j++)
+        for (int j = 0; j &lt; SIZE; j++)
         {
             a[j] = b[j] + c[j] * d[j];
         }   
@@ -914,7 +916,7 @@ int main(int argc, char** argv){
     
     auto start = std::chrono::high_resolution_clock::now();
 
-    for(int i = 0;i&lt;n_repetitions;++i)
+    for(int i = 0; i &lt; n_repetitions; ++i)
         result = production_code::algorithm();
    
     auto end = std::chrono::high_resolution_clock::now();
@@ -922,7 +924,7 @@ int main(int argc, char** argv){
     
     start = std::chrono::high_resolution_clock::now();
     
-    for(int i = 0;i&lt;n_repetitions;++i)
+    for(int i = 0; i &lt; n_repetitions; ++i)
         new_result = new_ideas::algorithm();
         
     end = std::chrono::high_resolution_clock::now();
@@ -944,22 +946,23 @@ int main(int argc, char** argv){
     //..
     auto start = std::chrono::high_resolution_clock::now();
     auto end = start;
-    std::vector&lt;duration_t&gt; my_timings(n_repetitions);
+    std::vector&lt;duration_t&gt; prod_timings(n_repetitions), idea_timings(n_repetitions);
 
-    for(int i = 0;i&lt;n_repetitions;++i){
+    for(int i = 0; i &lt; n_repetitions; ++i) {
         start = std::chrono::high_resolution_clock::now();
         result = production_code::algorithm();
-        my_timings[i] = std::chrono::high_resolution_clock::now() - start;
+        prod_timings[i] = std::chrono::high_resolution_clock::now() - start;
     }
    
-    //same with new_result = new_ideas::algorithm()
+    // similar with new_ideas::algorithm() and idea_timings
 
-    if(result == new_result){
-        std::ofstream ofile(&quot;results.csv&quot;);ofile.open();
-        for(int i = 0;i&lt;n_repetitions;++i){
-            ofile &lt;&lt; i &lt;&lt; &quot;,production,&quot; &lt;&lt; prod_timings[i].count() &lt;&lt; &quot;,seconds&quot; &lt;&lt; std::endl;
+    if(result == new_result) {
+        std::ofstream ofile(&quot;results.csv&quot;);
+        ofile.open();
+        ofile &lt;&lt; &quot;#iteration,production,new_idea&quot; &lt;&lt; std::endl;
+        for(int i = 0; i &lt; n_repetitions; ++i) {
+            ofile &lt;&lt; i &lt;&lt; &quot;,&quot; &lt;&lt; prod_timings[i].count() &lt;&lt; &quot;,&quot; &lt;&lt; idea_timings[i].count() &lt;&lt; std::endl;
         }
-        //same with new_idea
         ofile.close()
     }
     else
@@ -1122,7 +1125,7 @@ template &lt;typename T&gt;
 double sum(const T* _data, std::size_t _len){
 
     double value = 0;
-    for(std::size_t i = 0;i&lt;_len;++i)
+    for(std::size_t i = 0; i &lt; _len; ++i)
         value += _data[i];
 
     return value;
@@ -1144,7 +1147,7 @@ double sum(const container_type&amp; _data){
 <pre><code>static void BM_integer_index(benchmark::State&amp; state) {
 
     const std::size_t len = 1 &lt;&lt; 20;
-    std::vector&lt;int&gt; values(len,0.f);
+    std::vector&lt;int&gt; values(len, 0.f);
     double result = 0;
 
     for (auto _ : state){
@@ -1157,7 +1160,7 @@ BENCHMARK(BM_integer_index);
 static void BM_range_based(benchmark::State&amp; state) {
 
     const std::size_t len = 1 &lt;&lt; 20;
-    std::vector&lt;int&gt; values(len,0.f);
+    std::vector&lt;int&gt; values(len, 0.f);
     double result = 0;
 
     for (auto _ : state){
@@ -1192,7 +1195,7 @@ BM_range_based       937344 ns     929681 ns        768</code></pre>
 static void BM_integer_index(benchmark::State&amp; state) {
 
     const std::size_t len = state.range(0);
-    std::vector&lt;T&gt; values(len,0.f);
+    std::vector&lt;T&gt; values(len, 0.f);
     double result = 0;
 
     for (auto _ : state){
@@ -1506,7 +1509,7 @@ double V[M][N][N];
 double ROC[M][N][N];
 double c0, c1, c2, c3, c4, lap;
 
-for(int k=4; k < M-4; k++) { for(int j=4; j < N-4; j++) { for(int i=4; i < N-4; i++) {
+for(int k=4; k < M-4; k++) { for(int j = 4; j < N-4; j++) { for(int i = 4; i < N-4; i++) {
             lap = c0 * V[k][j][i]
                 + c1 * ( V[ k ][ j ][i+1] + V[ k ][ j ][i-1])
                 [...10 lines...]
