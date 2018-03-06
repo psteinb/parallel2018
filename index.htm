@@ -620,7 +620,7 @@ List of pre-defined events (to be used in -e):
 </ul>
 </aside>
 </section><section id="test-hypothesis-with-likwid" class="slide level2">
-<h2>Test hypothesis with <a href="https://github.com/RRZE-HPC/likwid">likwid</a></h2>
+<h2>Test hypothesis with <a href="https://github.com/RRZE-HPC/likwid/wiki">likwid</a></h2>
 <div class="container-fluid">
 <div class="row align-items-center">
 <div class="col">
@@ -634,15 +634,15 @@ List of pre-defined events (to be used in -e):
 <div class="row align-items-start">
 <div class="col">
 <ul>
-<li><a href="https://github.com/RRZE-HPC/likwid/wiki">github.com/RRZE-HPC/likwid</a></li>
 <li>performance monitoring and benchmarking suite</li>
-<li>exploration through monitoring</li>
-<li>Linux only, GPL</li>
+<li>exploration through hardware monitoring</li>
+<li>Linux only, GPLv3</li>
+<li>Main focus x86, ARM and POWER upcoming</li>
 </ul>
 </div>
 <div class="col">
 <ul>
-<li>profiling through hardware counters<br>(consistent eventset names for portability)</li>
+<li>profiling hardware counters<br>(consistent eventset names for portability)</li>
 <li>supports almost all provided counters and events</li>
 <li>instrumentation API for C, C++, java and python</li>
 </ul>
@@ -749,7 +749,7 @@ $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
 
 <section id="instrumentation-likwid" class="slide level2">
 <h2>Interested in just a code region?</h2>
-<p><strong>LIKWID MarkerAPI</strong></p>
+<p><strong>LIKWID MarkerAPI (alternative <a href="http://icl.cs.utk.edu/papi/">PAPI</a>)</strong></p>
 <div class="container-fluid">
 <div class="row align-items-start">
 <div class="col-6">
@@ -792,7 +792,7 @@ int main(int argc, char* argv[])
 <li>Results are grouped by region string</li>
 </ul>
 <div class="fragment">
-<pre><code>$ likwid-perfctr -C &lt;cpus&gt; -g &lt;eventset&gt; -m ./a.out
+<pre><code>$ likwid-perfctr -C 0 -g L3 -m ./a.out
 [...]
 Region triad, Group 1: L3
 +-------------------+----------+
