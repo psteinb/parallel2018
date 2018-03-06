@@ -706,41 +706,41 @@ int main(int argc, char** argv){
 <p>Use Case</p>
 <pre><code>$ export OMP_NUM_THREADS=1
 $ path/to/likwid-perfctr -C 0 -g FALSE_SHARE ./my_app
-+----------------------------------|--------------+
++----------------------------------+--------------+
 |              Metric              |    Core 0    |
-+----------------------------------|--------------+
++----------------------------------+--------------+
 |  Local LLC false sharing [MByte] |       0.0008 |
 |   Local LLC false sharing rate   | 5.608215e-10 |
-+----------------------------------|--------------+
++----------------------------------+--------------+
 </code><code>
 $ export OMP_NUM_THREADS=4
 $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./my_app
-+---------------------------------------|--------------|
++---------------------------------------+--------------|
 |                 Metric                |      Sum     |
-+---------------------------------------|--------------|
++---------------------------------------+--------------|
 |  Local LLC false sharing [MByte] STAT |    2973.7637 |
 |   Local LLC false sharing rate STAT   |       0.0081 |
-+---------------------------------------|--------------|</code></pre>
++---------------------------------------+--------------|</code></pre>
 </div>
 <div class="col-6">
 <p><a href="https://www.cs.virginia.edu/stream/">stream</a> benchmark as reference</p>
 <pre><code>$ export OMP_NUM_THREADS=1
 $ path/to/likwid-perfctr -C 0 -g FALSE_SHARE ./stream
-+----------------------------------|--------------+
++----------------------------------+--------------+
 |              Metric              |    Core 0    |
-+----------------------------------|--------------+
++----------------------------------+--------------+
 |  Local LLC false sharing [MByte] |       0.0006 |
 |   Local LLC false sharing rate   | 6.057282e-10 |
-+----------------------------------|--------------+
++----------------------------------+--------------+
 </code><code>
 $ export OMP_NUM_THREADS=4
 $ path/to/likwid-perfctr -C 0-4 -g FALSE_SHARE ./stream
-+---------------------------------------|--------------|
++---------------------------------------+--------------|
 |                 Metric                |      Sum     |
-+---------------------------------------|--------------|
++---------------------------------------+--------------|
 |  Local LLC false sharing [MByte] STAT |       0.1067 |
 |   Local LLC false sharing rate STAT   | 4.080027e-07 |
-+---------------------------------------|--------------|</code></pre>
++---------------------------------------+--------------|</code></pre>
 </div>
 </div>
 <p><center><strong>Warning</strong>: some events provide only qualitative but not quantitative results</center></p>
